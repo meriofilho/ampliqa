@@ -2,10 +2,29 @@
 
 Rodar localmente:  streamlit run app.py
 """
+import sys
+from pathlib import Path
+
 import streamlit as st
 
-from ampliqa import ui
-from ampliqa.i18n import t
+
+def _fresh_ampliqa():
+    """O Streamlit reexecuta este arquivo a cada interação, mas mantém o pacote ampliqa na memória. Depois de uma
+    atualização (git pull no Streamlit Cloud ou edição local), as telas novas rodariam com módulos antigos.
+    Se algum arquivo do pacote mudou desde a importação, o pacote é descartado e importado de novo."""
+    sig = tuple(sorted((p.name, p.stat().st_mtime_ns) for p in (Path(__file__).parent / "ampliqa").glob("*.py")))
+    old = sys.modules.get("ampliqa")
+    if old is not None and getattr(old, "_SIG", None) != sig:
+        for name in [m for m in sys.modules if m == "ampliqa" or m.startswith("ampliqa.")]:
+            del sys.modules[name]
+    import ampliqa
+    ampliqa._SIG = sig
+
+
+_fresh_ampliqa()
+
+from ampliqa import ui  # noqa: E402
+from ampliqa.i18n import t  # noqa: E402
 
 st.set_page_config(page_title="AmpliQA", page_icon="🧬", layout="wide")
 ui.setup_page()
