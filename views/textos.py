@@ -1,12 +1,12 @@
 import streamlit as st
 
-from ampliqa import analysis, texts, ui
+from ampliqa import analysis, design, texts, ui
 from ampliqa.i18n import is_en, t
 
 ui.header(t("Métodos e resultados"),
           t("Rascunho em inglês e português, preenchido com a sua análise – revise antes de usar"))
 exp = st.session_state.exp
-mc = {**texts.METHODS_DEFAULTS, **(exp.get("methods_cfg") or {})}
+mc = {**texts.METHODS_DEFAULTS, **design.methods_from(exp["meta"]), **(exp.get("methods_cfg") or {})}
 
 an = analysis.run(exp)
 if not an["ok"]:
@@ -18,12 +18,18 @@ with st.container(border=True):
     st.markdown(t("**1. Confirme o POP, os kits e os equipamentos usados** (o padrão segue os POPs atuais "
                   "PO.OPE.01 a 04BIOMOL)"))
     c1, c2, c3 = st.columns(3)
-    mc["especie"] = c1.text_input(t("Espécie"), mc["especie"])
-    tipos = list(texts.SAMPLE_TYPES)
-    mc["tipo_amostra"] = c2.selectbox(t("Tipo de amostra"), tipos,
-                                      index=tipos.index(mc["tipo_amostra"]) if mc["tipo_amostra"] in tipos else 0,
-                                      format_func=lambda k: texts.SAMPLE_TYPES[k][0].capitalize() if is_en() else k)
-    mc["animais_por_pool"] = int(c3.number_input(t("Animais por pool"), 1, 50, int(mc["animais_por_pool"])))
+    if is_en():
+        mc["especie"] = c1.text_input(t("Espécie (texto em inglês)"), mc["especie"])
+    else:
+        mc["especie_pt"] = c1.text_input(t("Espécie (texto em português)"), mc.get("especie_pt") or mc["especie"])
+    sp = design.plan(exp["meta"])["especie"]
+    tipos = [x for x in design.tissues_for(sp) if x != design.OUTRO] if sp in design.SPECIES else list(texts.SAMPLE_TYPES)
+    if mc["tipo_amostra"] not in tipos:
+        tipos.append(mc["tipo_amostra"])
+    mc["tipo_amostra"] = c2.selectbox(t("Tipo de amostra"), tipos, index=tipos.index(mc["tipo_amostra"]),
+                                      format_func=lambda k: design.LABELS_EN.get(k, k) if is_en() else k)
+    mc["animais_por_pool"] = int(c3.number_input(t("Indivíduos por pool"), 1, 200, int(mc["animais_por_pool"]),
+                                                 help=t("Use 1 se cada amostra é um único indivíduo (sem pool).")))
     mc["exposicao"] = st.text_input(t("Exposição / tratamento (aparece entre parênteses)"), mc["exposicao"],
                                     placeholder="ex.: exposed to 2,4-DCP at 0, 50 and 500 µg/L for 96 h")
     with st.expander(t("Kits e equipamentos (padrão dos POPs)")):
@@ -66,7 +72,7 @@ for tab, lang in ((tab_en, "en"), (tab_pt, "pt")):
             st.text_area(head, body, height=min(420, 90 + len(body) // 3), key=f"txt_{lang}_{head}_{hash(body)}",
                          label_visibility="collapsed")
         st.download_button("⬇️ Baixar em Word (.docx)" if lang == "pt" else "⬇️ Download Word (.docx)",
-                           texts.to_docx(sec, "Ampliqa – qPCR"), f"metodos_resultados_{lang}.docx",
+                           texts.to_docx(sec, "AmpliQA – qPCR"), f"metodos_resultados_{lang}.docx",
                            "application/vnd.openxmlformats-officedocument.wordprocessingml.document", key=f"dl_{lang}")
 st.caption(t("Os nomes dos grupos vêm da tela Estatística e figuras (ex.: A → Control). Os valores de F, p e fold "
              "change são os da análise atual; os limites de significância são * p < 0,05; ** p < 0,01; *** p < 0,001; "

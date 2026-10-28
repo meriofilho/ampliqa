@@ -2,7 +2,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-from ampliqa import analysis, experiment, importers, qpcr, quant, ui
+from ampliqa import analysis, design, experiment, importers, qpcr, quant, ui
 from ampliqa.i18n import t, tval
 from ampliqa.params import FISHLAB, QPCR_MIX
 
@@ -22,13 +22,17 @@ with t1:
               "de cada gene, os brancos (1 poço cada)."))
     _q = quant.compute(exp["quant"], exp["quant_params"])
     codes_quant = [str(c) for c in _q.loc[_q["Situação"] != "", "Código"]]
+    _d = design.plan(exp["meta"])
+    if not codes_quant and _d["grupos"] and _d["por_grupo"]:
+        codes_quant = design.sample_codes(_d["grupos"], _d["por_grupo"])
     c1, c2 = st.columns(2)
     genes_txt = c1.text_area(t("Genes (um por linha; o de referência primeiro)"),
                              value=cfg.get("genes_placa") or "actb1\ngene_alvo_1\ngene_alvo_2\ngene_alvo_3",
                              height=150)
     samples_txt = c2.text_area(t("Amostras (uma por linha)"),
                                value=cfg.get("amostras_placa") or "\n".join(codes_quant), height=150,
-                               help=t("Já vem preenchido com as amostras da tela de Quantificação."))
+                               help=t("Já vem preenchido com as amostras da tela de Quantificação (ou do desenho do experimento, "
+                                      "na tela Início)."))
     cfg["genes_placa"], cfg["amostras_placa"] = genes_txt, samples_txt
     genes = [g.strip() for g in genes_txt.splitlines() if g.strip()]
     samples = [s.strip() for s in samples_txt.splitlines() if s.strip()]

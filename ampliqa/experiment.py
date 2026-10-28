@@ -21,7 +21,8 @@ FORMATO = "ampliqa-v1"
 def new_experiment(nome="", responsavel="") -> dict:
     now = datetime.now().strftime("%d/%m/%Y %H:%M")
     return {
-        "meta": {"Experimento": nome, "Responsável": responsavel, "Espécie / tecido": "", "Observações": "",
+        "meta": {"Experimento": nome, "Responsável": responsavel, "Espécie": "", "Tecido": "", "Grupos": "",
+                 "Amostras por grupo": "", "Indivíduos por pool": "", "Observações": "",
                  "Criado em": now, "Atualizado em": now, "Formato": FORMATO},
         "quant_params": dict(QUANT_DEFAULTS),
         "quant": quant.empty_table(),
@@ -74,12 +75,12 @@ def to_xlsx(exp: dict) -> bytes:
     res = results_tables(exp)
     buf = io.BytesIO()
     with pd.ExcelWriter(buf, engine="openpyxl") as xw:
-        pd.DataFrame({"Arquivo do experimento – Ampliqa": [
-            "Este arquivo foi gerado pelo app Ampliqa. Guarde-o no seu Google Drive.",
+        pd.DataFrame({"Arquivo do experimento – AmpliQA": [
+            "Este arquivo foi gerado pelo app AmpliQA. Guarde-o no seu Google Drive.",
             "Para continuar o experimento, abra o app e carregue este arquivo na tela Início.",
             "As abas Experimento, Parametros_cDNA, Quantificacao, qPCR_Ct, qPCR_Grupos e qPCR_Config são lidas pelo app.",
             "As abas de resultado (Quant_Resultados, Pipetagem_cDNA, qPCR_Resultados, qPCR_Resumo) são só para consulta.",
-            "Ampliqa: desenvolvido por Romério de Oliveira Lima Filho (Dalmolin Systems Biology Group) em parceria com o "
+            "AmpliQA: desenvolvido por Romério de Oliveira Lima Filho (Dalmolin Systems Biology Group) em parceria com o "
             "Fish Lab – UFRN, seguindo os POPs de Biologia Molecular (PO.OPE.01 a 04BIOMOL). github.com/meriofilho/ampliqa",
         ]}).to_excel(xw, sheet_name="Leia-me", index=False)
         _kv(exp["meta"]).to_excel(xw, sheet_name="Experimento", index=False)

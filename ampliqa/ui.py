@@ -1,6 +1,9 @@
 """Elementos visuais e estado compartilhado entre as telas."""
+import base64
 import re
 from datetime import date
+from functools import lru_cache
+from pathlib import Path
 
 import pandas as pd
 import streamlit as st
@@ -9,6 +12,8 @@ from . import experiment
 from .i18n import LANGS, is_en, t, tval
 from .params import FISHLAB
 
+ASSETS = Path(__file__).resolve().parent.parent / "assets"
+URL_DG, URL_FL = "https://dalmolingroup.imd.ufrn.br/", "https://www.fishlabufrn.com/"
 LAB_DG = '<a href="https://dalmolingroup.imd.ufrn.br/" target="_blank">Dalmolin Systems Biology Group</a>'
 LAB_FL = '<a href="https://www.fishlabufrn.com/" target="_blank">Fish Lab</a>'
 
@@ -23,6 +28,9 @@ CSS = f"""
   .fl-header p {{ color: #E3F1F1; margin: 0.2rem 0 0 0; font-size: 0.92rem; }}
   .fl-step {{ border-left: 5px solid {FISHLAB['destaque']}; background: white; padding: 0.6rem 0.9rem;
              border-radius: 6px; margin: 0.4rem 0 0.8rem 0; }}
+  .fl-labs {{ display: flex; align-items: center; gap: 0.9rem; flex-wrap: wrap; opacity: 0.75; }}
+  .fl-labs:hover {{ opacity: 1; }}
+  .fl-labs span {{ width: 100%; font-size: 0.75rem; color: #5b6b6b; }}
   .fl-foot {{ color: #5b6b6b; font-size: 0.8rem; margin-top: 2rem; }}
   div[data-testid="stMetricValue"] {{ color: {FISHLAB['primaria']}; }}
   h2, h3 {{ color: {FISHLAB['primaria']}; }}
@@ -55,7 +63,7 @@ def step(text: str):
 
 def footer():
     st.markdown('<div class="fl-foot">' + t(
-        "Ampliqa · código aberto (licença MIT) · desenvolvido por Romério de Oliveira Lima Filho, doutorando em "
+        "AmpliQA · código aberto (licença MIT) · desenvolvido por Romério de Oliveira Lima Filho, doutorando em "
         "Bioinformática no {dg}, em parceria com o {fl} (UFRN). Segue os POPs de Biologia Molecular (PO.OPE.01 a "
         "04BIOMOL).", dg=LAB_DG, fl=LAB_FL) + "</div>", unsafe_allow_html=True)
 
@@ -69,7 +77,7 @@ def file_name(exp: dict) -> str:
 def sidebar():
     exp = st.session_state.exp
     with st.sidebar:
-        st.markdown("### 🧬 Ampliqa")
+        st.markdown("### 🧬 AmpliQA")
         nome = exp["meta"].get("Experimento") or t("— sem nome —")
         resp = exp["meta"].get("Responsável") or "—"
         st.markdown(f"**{t('Experimento')}:** {nome}  \n**{t('Responsável')}:** {resp}")
@@ -78,6 +86,24 @@ def sidebar():
                            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
         st.caption(t("Salve sempre que terminar uma etapa e guarde o arquivo no seu Google Drive."))
         _help_box(exp)
+        lab_logos()
+
+
+@lru_cache(maxsize=None)
+def _img64(name: str) -> str:
+    return base64.b64encode((ASSETS / name).read_bytes()).decode()
+
+
+def lab_logos():
+    """Logos dos dois laboratórios, pequenos e discretos, no fim da barra lateral."""
+    st.markdown("---")
+    st.markdown(
+        f'<div class="fl-labs"><span>{t("Um projeto de")}</span>'
+        f'<a href="{URL_DG}" target="_blank" title="Dalmolin Systems Biology Group">'
+        f'<img src="data:image/png;base64,{_img64("dalmolin_logo.png")}" style="height:22px"></a>'
+        f'<a href="{URL_FL}" target="_blank" title="Fish Lab – UFRN">'
+        f'<img src="data:image/png;base64,{_img64("fishlab_logo.png")}" style="height:46px"></a></div>',
+        unsafe_allow_html=True)
 
 
 def _help_box(exp):

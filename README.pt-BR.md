@@ -1,17 +1,24 @@
-# Ampliqa
+# AmpliQA
 
 [![tests](https://github.com/meriofilho/ampliqa/actions/workflows/tests.yml/badge.svg)](https://github.com/meriofilho/ampliqa/actions/workflows/tests.yml)
 
 [English](README.md) · **Português**
 
-O **Ampliqa** é um app web gratuito e de código aberto (Python + Streamlit) para **planejar e analisar experimentos de expressão
+### ▶️ [Abrir o AmpliQA no navegador](https://ampliqpcr.streamlit.app/) – sem instalar nada
+
+O **AmpliQA** é um app web gratuito e de código aberto (Python + Streamlit) para **planejar e analisar experimentos de expressão
 gênica por RT-qPCR**, da quantificação do RNA à figura e ao texto de métodos. Segue as diretrizes MIQE e os POPs de
 Biologia Molecular (PO.OPE.01 a 04BIOMOL) do Fish Lab.
 
-O Ampliqa é um projeto conjunto de dois laboratórios da Universidade Federal do Rio Grande do Norte (UFRN):
+O AmpliQA é um projeto conjunto de dois laboratórios da Universidade Federal do Rio Grande do Norte (UFRN):
 
 - [**Dalmolin Systems Biology Group**](https://dalmolingroup.imd.ufrn.br/), Programa de Pós-Graduação em Bioinformática
 - [**Fish Lab – Laboratório de Peixes**](https://www.fishlabufrn.com/)
+
+### Por que "AmpliQA"?
+
+- **Ampli** – de *amplificação*, o processo central da PCR, a técnica mais usada em qualquer laboratório de biologia molecular.
+- **QA** – *Quality Assurance* (garantia de qualidade): a ferramenta ajuda a organizar, padronizar e validar os experimentos, da qualidade do RNA à conferência de réplicas, brancos e genes de referência.
 
 > Licença [MIT](LICENSE). Como citar: [CITATION.cff](CITATION.cff).
 
@@ -94,6 +101,8 @@ ampliqa/help.py         central de ajuda e referências
 ```
 
 ## Publicar (Streamlit Community Cloud – grátis)
+
+Versão pública: https://ampliqpcr.streamlit.app/
 
 1. Código: https://github.com/meriofilho/ampliqa
 2. Em share.streamlit.io: *Create app* → repositório, branch e `app.py`.

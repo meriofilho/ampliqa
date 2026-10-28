@@ -67,7 +67,8 @@ def qpcr_long() -> pd.DataFrame:
 
 def experiment_example() -> dict:
     e = experiment.new_experiment("Exemplo – larvas expostas a duas doses", "Fishlab (dados fictícios)")
-    e["meta"]["Espécie / tecido"] = "zebrafish – larvas inteiras (pool de 10)"
+    e["meta"].update({"Espécie": "Zebrafish (Danio rerio)", "Tecido": "Larva inteira", "Grupos": 3,
+                      "Amostras por grupo": 3, "Indivíduos por pool": 10})
     e["meta"]["Observações"] = "Dados fictícios para aprender a usar o app."
     e["quant"] = quant_table()
     raw = qpcr_long()

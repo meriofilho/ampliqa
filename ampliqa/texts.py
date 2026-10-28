@@ -8,19 +8,17 @@ import io
 import numpy as np
 import pandas as pd
 
+from .design import TISSUES
 from .stats import stars
 
-SAMPLE_TYPES = {
-    "Larvas inteiras": ("whole larvae", "larvas inteiras"),
-    "Cérebros": ("brains", "cérebros"),
-    "Cabeças": ("heads", "cabeças"),
-    "Fígados": ("livers", "fígados"),
-    "Músculo": ("muscle samples", "amostras de músculo"),
-}
+# tipo de amostra (rótulo pt) -> (frase en, frase pt) no plural; nomes antigos continuam valendo
+SAMPLE_TYPES = {k: (v[1], v[2]) for k, v in TISSUES.items()}
+_OLD = {"Larvas inteiras": "Larva inteira", "Cérebros": "Cérebro", "Cabeças": "Cabeça", "Fígados": "Fígado"}
 
 METHODS_DEFAULTS = {
     "especie": "zebrafish (Danio rerio)",
-    "tipo_amostra": "Larvas inteiras",
+    "especie_pt": "zebrafish (Danio rerio)",
+    "tipo_amostra": "Larva inteira",
     "animais_por_pool": 10,
     "exposicao": "",
     "extracao": "RNeasy® Mini Kit (QIAGEN)",
@@ -117,12 +115,19 @@ def _norm_sentence(refs, eff, lang):
 
 def methods(cfg, ref_gene, n_por_grupo, lang, eff=False):
     c = {**METHODS_DEFAULTS, **cfg}
-    st_en, st_pt = SAMPLE_TYPES.get(c["tipo_amostra"], (c["tipo_amostra"], c["tipo_amostra"]))
+    tipo = _OLD.get(c["tipo_amostra"], c["tipo_amostra"])
+    st_en, st_pt = SAMPLE_TYPES.get(tipo, (str(tipo).lower(), str(tipo).lower()))
     expo = f" ({c['exposicao']})" if c["exposicao"] else ""
+    sp_en = c["especie"]
+    sp_pt = c.get("especie_pt") or sp_en
+    pool = int(c["animais_por_pool"] or 1)
     if lang == "en":
+        of_sp = f" of {sp_en}" if sp_en else ""
+        first = (f"Samples consisted of {n_por_grupo} pools per group, each containing {pool} {st_en}{of_sp}{expo}."
+                 if pool > 1 else
+                 f"Samples consisted of {n_por_grupo} biological replicates per group ({st_en}{of_sp}{expo}).")
         return (
-            f"Relative gene expression was evaluated by qPCR. Samples consisted of {n_por_grupo} pools per group, each "
-            f"containing {c['animais_por_pool']} {st_en} of {c['especie']}{expo}. Samples were stored in RNAlater "
+            f"Relative gene expression was evaluated by qPCR. {first} Samples were stored in RNAlater "
             f"(Sigma-Aldrich®) at −20 °C until RNA extraction. Total RNA was purified using the {c['extracao']} "
             f"according to the manufacturer's instructions, and RNA concentration and purity (A260/280 and A260/230 "
             f"ratios) were assessed using a {c['quantificacao']}. cDNA was synthesized from {c['massa_rna']} ng of total "
@@ -135,8 +140,12 @@ def methods(cfg, ref_gene, n_por_grupo, lang, eff=False):
             "and no-RNA (reverse transcription blank) controls were included for each gene. Primer efficiency was "
             "verified by standard curves (acceptance: 90–110%; R² ≥ 0.98). " + _norm_sentence(ref_gene, eff, "en"))
     return (
-        f"A expressão gênica relativa foi avaliada por qPCR. As amostras consistiram em {n_por_grupo} pools por grupo, "
-        f"cada um com {c['animais_por_pool']} {st_pt} de {c['especie']}{expo}. As amostras foram armazenadas em "
+        "A expressão gênica relativa foi avaliada por qPCR. "
+        + (f"As amostras consistiram em {n_por_grupo} pools por grupo, cada um com {pool} {st_pt}"
+           f"{' de ' + sp_pt if sp_pt else ''}{expo}." if pool > 1 else
+           f"As amostras consistiram em {n_por_grupo} réplicas biológicas por grupo ({st_pt}"
+           f"{' de ' + sp_pt if sp_pt else ''}{expo}).")
+        + " As amostras foram armazenadas em "
         f"RNAlater (Sigma-Aldrich®) a −20 °C até a extração. O RNA total foi purificado com o {c['extracao']}, "
         f"segundo as instruções do fabricante, e a concentração e a pureza do RNA (razões A260/280 e A260/230) foram "
         f"avaliadas no {c['quantificacao']}. O cDNA foi sintetizado a partir de {c['massa_rna']} ng de RNA total com o "
@@ -192,7 +201,7 @@ def statistics(analyses, metric, comparison, lang):
         else:
             items = [f"{_test_phrase(t, p, 'en')} ({', '.join(g)})" for (t, p), g in combos.items()]
             parts.append("Groups were compared using " + "; ".join(items) + ".")
-        parts.append("The significance level was set at α = 0.05. Analyses were performed in Ampliqa (Python; "
+        parts.append("The significance level was set at α = 0.05. Analyses were performed in AmpliQA (Python; "
                      "SciPy and statsmodels).")
     else:
         parts = [f"As análises estatísticas foram feitas sobre os {scale_pt} de cada réplica biológica (pool). A "
@@ -205,7 +214,7 @@ def statistics(analyses, metric, comparison, lang):
         else:
             items = [f"{_test_phrase(t, p, 'pt')} ({', '.join(g)})" for (t, p), g in combos.items()]
             parts.append("Os grupos foram comparados por " + "; ".join(items) + ".")
-        parts.append("O nível de significância adotado foi α = 0,05. As análises foram realizadas no Ampliqa "
+        parts.append("O nível de significância adotado foi α = 0,05. As análises foram realizadas no AmpliQA "
                      "(Python; SciPy e statsmodels).")
     return " ".join(parts)
 
@@ -311,7 +320,7 @@ def to_docx(sections: dict, title: str) -> bytes:
         doc.add_heading(head, level=2)
         for para in str(body).split("\n\n"):
             doc.add_paragraph(para)
-    doc.add_paragraph("Rascunho gerado pelo Ampliqa – revise antes de usar.").runs[0].italic = True
+    doc.add_paragraph("Rascunho gerado pelo AmpliQA – revise antes de usar.").runs[0].italic = True
     buf = io.BytesIO()
     doc.save(buf)
     return buf.getvalue()

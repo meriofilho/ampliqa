@@ -1,17 +1,13 @@
-"""Ampliqa – planejamento e análise de experimentos de expressão gênica (RT-qPCR).
+"""AmpliQA – planejamento e análise de experimentos de expressão gênica (RT-qPCR).
 
 Rodar localmente:  streamlit run app.py
 """
-from pathlib import Path
-
 import streamlit as st
 
 from ampliqa import ui
 from ampliqa.i18n import t
 
-ASSETS = Path(__file__).parent / "assets"
-st.set_page_config(page_title="Ampliqa", page_icon=str(ASSETS / "fishlab_icon.png"), layout="wide")
-st.logo(str(ASSETS / "fishlab_icon.png"), size="large")
+st.set_page_config(page_title="AmpliQA", page_icon="🧬", layout="wide")
 ui.setup_page()
 ui.language_selector()
 

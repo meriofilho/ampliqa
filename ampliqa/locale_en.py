@@ -20,12 +20,13 @@ EN = {
         "⚠️ {n} issue(s) found in your experiment – see the Help center.",
     "Nada encontrado. Tente outras palavras ou abra a Central de ajuda.":
         "Nothing found. Try other words or open the Help center.",
-    "Ampliqa · código aberto (licença MIT) · desenvolvido por Romério de Oliveira Lima Filho, doutorando em "
+    "AmpliQA · código aberto (licença MIT) · desenvolvido por Romério de Oliveira Lima Filho, doutorando em "
     "Bioinformática no {dg}, em parceria com o {fl} (UFRN). Segue os POPs de Biologia Molecular (PO.OPE.01 a "
     "04BIOMOL).":
-        "Ampliqa · open source (MIT license) · developed by Romério de Oliveira Lima Filho, PhD student in "
+        "AmpliQA · open source (MIT license) · developed by Romério de Oliveira Lima Filho, PhD student in "
         "Bioinformatics at the {dg}, in partnership with the {fl} (UFRN). Follows the Molecular Biology SOPs "
         "(PO.OPE.01 to 04BIOMOL).",
+    "Um projeto de": "A project of",
     "Um projeto do [Dalmolin Systems Biology Group]({dg}) e do [Fish Lab – Laboratório de Peixes]({fl}), "
     "Universidade Federal do Rio Grande do Norte (UFRN).":
         "A project of the [Dalmolin Systems Biology Group]({dg}) and the [Fish Lab – Laboratório de Peixes]({fl}), "
@@ -41,6 +42,22 @@ EN = {
         "here, click **💾 Save experiment file** (sidebar) and keep the file in your Google Drive. To continue "
         "another day, load the file again on this screen. Nothing is stored on the server.",
     "Novo experimento": "New experiment", "Continuar um experimento": "Continue an experiment",
+    "Espécie / modelo": "Species / model", "Qual espécie ou modelo?": "Which species or model?",
+    "Tecido / tipo de amostra": "Tissue / sample type", "A lista muda conforme a espécie escolhida.":
+        "The list changes with the chosen species.",
+    "Qual tecido ou tipo de amostra?": "Which tissue or sample type?", "Nº de grupos": "Number of groups",
+    "Inclua o grupo controle.": "Include the control group.", "Amostras por grupo": "Samples per group",
+    "Réplicas biológicas de cada grupo: pools ou indivíduos.": "Biological replicates in each group: pools or individuals.",
+    "Indivíduos por pool": "Individuals per pool",
+    "Quantos indivíduos foram juntados em cada amostra. Use 1 se não houver pool.":
+        "How many individuals were pooled in each sample. Use 1 if there is no pooling.",
+    "{n} amostras no total ({g} grupos × {k}), com códigos de {a} a {b}. A 1ª letra é o grupo.":
+        "{n} samples in total ({g} groups × {k}), coded {a} to {b}. The 1st letter is the group.",
+    "Use 1 se cada amostra é um único indivíduo (sem pool).": "Use 1 if each sample is a single individual (no pooling).",
+    "Espécie (texto em inglês)": "Species (English text)", "Espécie (texto em português)": "Species (Portuguese text)",
+    "Já vem preenchido com as amostras da tela de Quantificação (ou do desenho do experimento, na tela Início).":
+        "Pre-filled with the samples from the Quantification screen (or from the experiment design on the Home "
+        "screen).",
     "Nome do experimento": "Experiment name", "Seu nome": "Your name", "Espécie / tecido": "Species / tissue",
     "Observações": "Notes", "Começar / atualizar dados": "Start / update details",
     "ex.: Fipronil larvas 96 hpf": "e.g. Fipronil larvae 96 hpf",

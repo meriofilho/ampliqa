@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below. / Se usar este software, cite-o como abaixo."
-title: "Ampliqa: open-source web app for planning and analysing RT-qPCR gene-expression experiments"
+title: "AmpliQA: open-source web app for planning and analysing RT-qPCR gene-expression experiments"
 repository-code: "https://github.com/meriofilho/ampliqa"
-url: "https://github.com/meriofilho/ampliqa"
+url: "https://ampliqpcr.streamlit.app/"
 version: 0.1.0
 date-released: 2026-10-27
 license: MIT
