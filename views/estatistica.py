@@ -131,8 +131,12 @@ with t2:
     o = dict(figures.BAR_DEFAULTS)
     o.update({k[4:]: v for k, v in scfg.items() if k.startswith("bar_")})
     c1, c2, c3, c4 = st.columns(4)
-    genes_sel = c1.multiselect("Genes", an["genes"], default=an["genes"][:6])
-    lvls_sel = c2.multiselect(t("Níveis do 2º fator"), an["levels"], default=an["levels"]) if two_levels else [""]
+    saved = analysis.saved_list(scfg.get("fig_genes_barras"), an["genes"], an["genes"][:6])
+    genes_sel = c1.multiselect("Genes", an["genes"], default=saved)
+    lvls_sel = (c2.multiselect(t("Níveis do 2º fator"), an["levels"],
+                               default=analysis.saved_list(scfg.get("fig_niveis"), an["levels"], an["levels"]))
+                if two_levels else [""])
+    scfg["fig_genes_barras"], scfg["fig_niveis"] = ";".join(genes_sel), ";".join(lvls_sel)
     o["sig"] = c3.radio(t("Significância"), ["Asteriscos", "Letras", "Nenhuma"],
                         index=["Asteriscos", "Letras", "Nenhuma"].index(o["sig"]), format_func=t)
     o["erro"] = s["erro"]
@@ -176,7 +180,9 @@ with t3:
     h = dict(figures.HEAT_DEFAULTS)
     h.update({k[5:]: v for k, v in scfg.items() if k.startswith("heat_")})
     c1, c2, c3 = st.columns(3)
-    genes_h = c1.multiselect(t("Genes (colunas)"), an["genes"], default=an["genes"], key="heat_genes")
+    genes_h = c1.multiselect(t("Genes (colunas)"), an["genes"], key="heat_genes",
+                             default=analysis.saved_list(scfg.get("fig_genes_heatmap"), an["genes"], an["genes"]))
+    scfg["fig_genes_heatmap"] = ";".join(genes_h)
     lim_fc = c2.select_slider(t("Limite da escala (fold change)"), options=[1.5, 2.0, 3.0, 4.0, 8.0],
                               value=min([1.5, 2.0, 3.0, 4.0, 8.0], key=lambda v: abs(v - 2 ** h["limite_log2"])))
     h["limite_log2"] = math.log2(lim_fc)

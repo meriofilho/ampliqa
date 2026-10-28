@@ -123,3 +123,33 @@ def prism_xlsx(an: dict, metric: str = "Fold change") -> bytes:
         res.to_excel(xw, sheet_name="Dados_limpos", index=False)
         an["summary"].to_excel(xw, sheet_name="Resumo", index=False)
     return buf.getvalue()
+
+
+def saved_list(value, options, default):
+    """Lista salva como "a;b;c", mantendo só o que ainda existe; senão, o padrão."""
+    items = [x for x in str(value or "").split(";") if x in options]
+    return items or list(default)
+
+
+def report_figures(an: dict, scfg: dict | None = None) -> list:
+    """Gráfico de barras e heatmap com as escolhas feitas na tela Estatística e figuras.
+    Devolve [(nome, figura matplotlib)]; quem chama fecha as figuras."""
+    from . import figures
+    scfg = scfg or {}
+    two = len(an["levels"]) > 1
+    out = []
+    o = {**figures.BAR_DEFAULTS, **{k[4:]: v for k, v in scfg.items() if k.startswith("bar_")}}
+    o["erro"] = an["cfg"].get("erro", "SEM")
+    genes = saved_list(scfg.get("fig_genes_barras"), an["genes"], an["genes"][:6])
+    lvls = saved_list(scfg.get("fig_niveis"), an["levels"], an["levels"]) if two else [""]
+    panels = [(g, lv) for g in genes for lv in lvls]
+    if panels:
+        out.append(("barras", figures.bar_figure(an["res"], panels, an["order"], an["control"], an["analyses"],
+                                                 an["labels"], o)))
+    h = {**figures.HEAT_DEFAULTS, **{k[5:]: v for k, v in scfg.items() if k.startswith("heat_")}}
+    genes_h = saved_list(scfg.get("fig_genes_heatmap"), an["genes"], an["genes"])
+    if genes_h:
+        out.append(("heatmap", figures.heatmap_figure(an["summary"], genes_h, an["order"],
+                                                      an["levels"] if two else [""], an["control"], an["pvals"],
+                                                      an["labels"], h)))
+    return out

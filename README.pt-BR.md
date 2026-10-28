@@ -26,10 +26,11 @@ O AmpliQA é um projeto conjunto de dois laboratórios da Universidade Federal d
 
 | Etapa | Recursos |
 |---|---|
+| **Planejamento** | Desenho do experimento (espécie, tecido, grupos, pools), cronograma das etapas, mensagem pronta para WhatsApp e eventos para o Google Agenda (links e .ics). |
 | **Quantificação → cDNA** | Leituras do NanoDrop, critérios de qualidade (A260/280, A260/230), volumes para 500 ng em 20 µL, mix comum e lista de pipetagem. |
 | **qPCR** | Mapa de placa e mix por gene; importação automática (QuantStudio, Rotor-Gene Q, tabelas); conferência de brancos e réplicas; **1 a 5 genes de referência** (média geométrica); **eficiência por gene**; **estabilidade das referências** (geNorm M e CV); remoção opcional de réplicas técnicas discrepantes (critério do Auto-qPCR). |
 | **Estatística e figuras** | Premissas (Shapiro-Wilk nos resíduos, Brown-Forsythe), teste recomendado e explicado (ANOVA + Dunnett/Tukey; Welch + Games-Howell; Kruskal-Wallis + Dunn-Holm; testes t / Mann-Whitney), Grubbs, 2º fator (por nível ou ANOVA de duas vias), gráfico de barras e heatmap (PNG 300 dpi e SVG, fonte Roboto), **exportação pronta para o GraphPad Prism**. |
-| **Métodos e resultados** | Rascunho em inglês e português com F, p e fold change preenchidos; exporta .docx. |
+| **Métodos e resultados** | Rascunho em inglês e português com F, p e fold change preenchidos; exporta .docx com as figuras escolhidas, ou um .zip com os Word e as figuras (PNG/SVG). |
 | **Central de ajuda** | Diagnóstico do experimento aberto, perguntas frequentes com causa e solução, links para os POPs e referências com DOI conferido na Crossref. Sem IA. |
 
 Interface em **português e inglês** (seletor na barra lateral).

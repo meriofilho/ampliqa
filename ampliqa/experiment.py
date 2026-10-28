@@ -12,7 +12,7 @@ import pandas as pd
 from openpyxl import load_workbook
 from openpyxl.styles import Alignment, Font, PatternFill
 
-from . import qpcr, quant
+from . import qpcr, quant, schedule
 from .params import FISHLAB, QPCR_DEFAULTS, QUANT_DEFAULTS
 
 FORMATO = "ampliqa-v1"
@@ -32,6 +32,7 @@ def new_experiment(nome="", responsavel="") -> dict:
                      "blank_lim": QPCR_DEFAULTS["blank_lim"], "letras_grupo": QPCR_DEFAULTS["letras_grupo"],
                      "brancos": ";".join(QPCR_DEFAULTS["brancos"]),
                      "eficiencias": "", "outlier_auto": False},
+        "cronograma": schedule.empty(),
         "stats_cfg": {},
         "methods_cfg": {},
     }
@@ -89,6 +90,8 @@ def to_xlsx(exp: dict) -> bytes:
         exp["qpcr_raw"].to_excel(xw, sheet_name="qPCR_Ct", index=False)
         exp["qpcr_groups"].to_excel(xw, sheet_name="qPCR_Grupos", index=False)
         _kv(exp["qpcr_cfg"]).to_excel(xw, sheet_name="qPCR_Config", index=False)
+        cron = schedule.normalize(exp.get("cronograma"))
+        cron.assign(Data=cron["Data"].dt.strftime("%d/%m/%Y")).to_excel(xw, sheet_name="Cronograma", index=False)
         _kv(exp.get("stats_cfg") or {}).to_excel(xw, sheet_name="Config_Estatistica", index=False)
         _kv(exp.get("methods_cfg") or {}).to_excel(xw, sheet_name="Config_Metodos", index=False)
         res["quant"].to_excel(xw, sheet_name="Quant_Resultados", index=False)
@@ -156,6 +159,8 @@ def from_xlsx(data: bytes) -> dict:
         if "outlier_auto" in cfg:
             cfg["outlier_auto"] = str(cfg["outlier_auto"]) == "True"
         exp["qpcr_cfg"].update({k: ("" if v == "nan" else v) for k, v in cfg.items()})
+    if "Cronograma" in sh:
+        exp["cronograma"] = schedule.normalize(sh["Cronograma"].astype(object))
     for sheet, key in (("Config_Estatistica", "stats_cfg"), ("Config_Metodos", "methods_cfg")):
         if sheet in sh and len(sh[sheet]):
             d = _from_kv(sh[sheet])

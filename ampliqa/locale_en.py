@@ -69,14 +69,16 @@ EN = {
         "Load the experiment file (.xlsx) saved in your Drive",
     "Experimento **{nome}** carregado.": "Experiment **{nome}** loaded.",
     "Não consegui abrir o arquivo: {e}": "Could not open the file: {e}",
-    "**Etapas disponíveis**\n1. **Quantificação → cDNA**: leituras do NanoDrop (digitadas ou do arquivo), qualidade, "
+    "**Etapas disponíveis**\n0. **Planejamento**: cronograma das etapas, mensagem para WhatsApp e eventos para o "
+    "Google Agenda.\n1. **Quantificação → cDNA**: leituras do NanoDrop (digitadas ou do arquivo), qualidade, "
     "volumes para 500 ng e lista de pipetagem (mix → água → RNA) – PO.OPE.01 e 02BIOMOL.\n2. **qPCR**: mapa de placa e "
     "mix por gene, importação do QuantStudio ou Rotor-Gene, 1 a 5 genes de referência, eficiência por gene, "
     "estabilidade das referências e alertas – PO.OPE.03 e 04BIOMOL.\n3. **Estatística e figuras**: teste recomendado "
     "e explicado, outliers, gráfico de barras, heatmap e tabelas para o GraphPad Prism.\n4. **Métodos e resultados**: "
     "rascunho em inglês e português com os seus números.\n5. **Central de ajuda**: diagnóstico do experimento e "
     "soluções para problemas comuns.":
-        "**Available steps**\n1. **Quantification → cDNA**: NanoDrop readings (typed or from file), quality, volumes "
+        "**Available steps**\n0. **Planning**: step schedule, WhatsApp message and Google Calendar events.\n"
+        "1. **Quantification → cDNA**: NanoDrop readings (typed or from file), quality, volumes "
         "for 500 ng and pipetting list (mix → water → RNA) – PO.OPE.01 and 02BIOMOL.\n2. **qPCR**: plate map and "
         "per-gene mix, QuantStudio or Rotor-Gene import, 1–5 reference genes, per-gene efficiency, reference "
         "stability and alerts – PO.OPE.03 and 04BIOMOL.\n3. **Statistics and figures**: recommended and explained "
@@ -508,6 +510,41 @@ EN = {
         "on fold change is meaningless – analyse on the ΔCt scale; (3) with n = 3 per cell, power to detect an "
         "interaction is low.",
 
+    # ---------------------------------------------------------------- planning and report
+    'Planejamento': 'Planning',
+    'Cronograma': 'Schedule',
+    'Planejamento – cronograma': 'Planning – schedule',
+    'Defina as datas de cada etapa, da bancada à análise, e compartilhe com os colaboradores': 'Set the date of each step, from the bench to the analysis, and share it with collaborators',
+    '✨ Sugerir um cronograma a partir de uma data (você ajusta depois)': '✨ Suggest a schedule from a start date (adjust it afterwards)',
+    'Início (extração de RNA)': 'Start (RNA extraction)',
+    'Dias de qPCR': 'qPCR days',
+    'Um dia por placa, em geral.': 'Usually one day per plate.',
+    'Dias úteis entre etapas': 'Working days between steps',
+    'Incluir curva de eficiência dos primers (PO.OPE.04)': 'Include primer efficiency curve (PO.OPE.04)',
+    'Fins de semana são pulados. A repetição de qPCR fica 2 dias úteis depois do último qPCR e a análise, 2 dias úteis depois. Isto substitui a tabela abaixo.': 'Weekends are skipped. The qPCR repeat goes 2 working days after the last qPCR and the analysis 2 working days later. This replaces the table below.',
+    'Sugerir cronograma': 'Suggest schedule',
+    '<b>Etapas do experimento</b> – edite à vontade. Use o <b>+</b> no fim da tabela para acrescentar etapas. Em <b>Convidados</b>, coloque os e-mails dos colaboradores separados por vírgula.': "<b>Experiment steps</b> – edit freely. Use the <b>+</b> at the end of the table to add steps. In <b>Guests</b>, enter collaborators' e-mails separated by commas.",
+    'Data': 'Date',
+    'Etapa': 'Step',
+    'Detalhes': 'Details',
+    'Convidados': 'Guests',
+    'Aparece em uma linha com * na mensagem.': 'Shown on a line starting with * in the message.',
+    'E-mails separados por vírgula.': 'E-mails separated by commas.',
+    'Preencha ao menos uma etapa com data para gerar a mensagem e os eventos.': 'Fill in at least one dated step to build the message and the events.',
+    '💬 Mensagem para WhatsApp': '💬 WhatsApp message',
+    '📆 Google Agenda': '📆 Google Calendar',
+    'Idioma da mensagem': 'Message language',
+    'Use o ícone de copiar no canto da caixa e cole no WhatsApp, ou abra direto pelo botão.': 'Use the copy icon in the corner of the box and paste it into WhatsApp, or open it directly with the button.',
+    'Abrir no WhatsApp': 'Open in WhatsApp',
+    '**Opção 1 – um evento por vez:** cada link abre o Google Agenda com a etapa já preenchida (dia inteiro, com os convidados). Confira e clique em Salvar; o Google envia o convite aos convidados.': '**Option 1 – one event at a time:** each link opens Google Calendar with the step filled in (all-day, with guests). Check it and click Save; Google sends the invitation to the guests.',
+    '**Opção 2 – todas as etapas de uma vez:** baixe o arquivo .ics e importe no Google Agenda (Configurações → Importar e exportar). Também funciona no Outlook e no Apple Calendar.': '**Option 2 – all steps at once:** download the .ics file and import it into Google Calendar (Settings → Import & export). It also works in Outlook and Apple Calendar.',
+    '📆 Baixar cronograma (.ics)': '📆 Download schedule (.ics)',
+    'O cronograma é salvo no arquivo do experimento (aba Cronograma). O app não envia nada sozinho.': 'The schedule is saved in the experiment file (Schedule sheet). The app never sends anything on its own.',
+    '**2. Figuras do relatório** – as mesmas da tela Estatística e figuras, com as cores, genes e opções que você escolheu lá': '**2. Report figures** – the same as on the Statistics and figures screen, with the colors, genes and options you chose there',
+    'Gráfico de barras': 'Bar chart',
+    'Incluir no relatório': 'Include in the report',
+    'Nenhuma figura selecionada: o relatório terá só o texto.': 'No figure selected: the report will have text only.',
+    '📦 Baixar tudo (.zip): Word em inglês e português + figuras em PNG 300 dpi e SVG': '📦 Download everything (.zip): Word in English and Portuguese + figures as 300 dpi PNG and SVG',
     # ---------------------------------------------------------------- table columns
     "Código": "Code", "Grupo": "Group", "Réplica": "Replicate", "Amostra": "Sample", "Poço": "Well",
     "Omitir": "Omit", "Branco": "Blank", "Usar": "Use", "Eficiência (%)": "Efficiency (%)", "Poços": "Wells",

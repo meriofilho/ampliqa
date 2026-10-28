@@ -75,7 +75,7 @@ def test_sample_types_en():
     assert all(len(v) == 2 for v in texts.SAMPLE_TYPES.values())
 
 
-@pytest.mark.parametrize("page", ["views/inicio.py", "views/quant_cdna.py", "views/qpcr.py", "views/estatistica.py",
+@pytest.mark.parametrize("page", ["views/inicio.py", "views/cronograma.py", "views/quant_cdna.py", "views/qpcr.py", "views/estatistica.py",
                                   "views/textos.py", "views/ajuda.py"])
 def test_telas_em_ingles(page):
     from streamlit.testing.v1 import AppTest

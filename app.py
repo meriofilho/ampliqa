@@ -13,6 +13,9 @@ ui.language_selector()
 
 pages = st.navigation({
     "": [st.Page("views/inicio.py", title=t("Início"), icon=":material/home:", default=True)],
+    t("Planejamento"): [
+        st.Page("views/cronograma.py", title=t("Cronograma"), icon=":material/calendar_month:"),
+    ],
     t("Bancada"): [
         st.Page("views/quant_cdna.py", title=t("Quantificação → cDNA"), icon=":material/science:"),
         st.Page("views/qpcr.py", title="qPCR", icon=":material/grid_on:"),

@@ -26,10 +26,11 @@ AmpliQA is a joint project of two laboratories at the Federal University of Rio 
 
 | Step | What it does |
 |---|---|
+| **Planning** | Experiment design (species, tissue, groups, pools), step schedule, WhatsApp-ready message and Google Calendar events (links and .ics). |
 | **Quantification → cDNA** | NanoDrop readings, quality criteria (A260/280, A260/230), volumes for 500 ng in 20 µL, master mix and pipetting list. |
 | **qPCR** | Plate map and per-gene mix; automatic import (QuantStudio, Rotor-Gene Q, generic tables); blank and replicate checks; **1–5 reference genes** (geometric mean); **gene-specific efficiencies**; **reference-gene stability** (geNorm M and CV); optional removal of outlying technical replicates (Auto-qPCR rule). |
 | **Statistics and figures** | Assumption checks (Shapiro-Wilk on residuals, Brown-Forsythe), recommended and explained test (ANOVA + Dunnett/Tukey; Welch + Games-Howell; Kruskal-Wallis + Dunn-Holm; t-tests / Mann-Whitney), Grubbs, second factor (per level or two-way ANOVA), bar chart and heatmap (PNG 300 dpi and SVG, Roboto font), **GraphPad Prism-ready export**. |
-| **Methods and results** | Draft text in English and Portuguese with F, p and fold change filled in; .docx export. |
+| **Methods and results** | Draft text in English and Portuguese with F, p and fold change filled in; .docx export with the chosen figures, or a .zip with Word files and figures (PNG/SVG). |
 | **Help center** | Diagnosis of the open experiment, FAQ with cause and fix, links to the SOPs and references with Crossref-checked DOIs. No AI. |
 
 Interface in **English and Portuguese** (selector in the sidebar).

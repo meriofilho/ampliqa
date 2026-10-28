@@ -78,6 +78,7 @@ with c2:
             st.error(t("Não consegui abrir o arquivo: {e}", e=e))
     with st.container(border=True):
         st.markdown(t("""**Etapas disponíveis**
+0. **Planejamento**: cronograma das etapas, mensagem para WhatsApp e eventos para o Google Agenda.
 1. **Quantificação → cDNA**: leituras do NanoDrop (digitadas ou do arquivo), qualidade, volumes para 500 ng e lista de pipetagem (mix → água → RNA) – PO.OPE.01 e 02BIOMOL.
 2. **qPCR**: mapa de placa e mix por gene, importação do QuantStudio ou Rotor-Gene, 1 a 5 genes de referência, eficiência por gene, estabilidade das referências e alertas – PO.OPE.03 e 04BIOMOL.
 3. **Estatística e figuras**: teste recomendado e explicado, outliers, gráfico de barras, heatmap e tabelas para o GraphPad Prism.

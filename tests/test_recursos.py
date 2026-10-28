@@ -68,7 +68,7 @@ def test_arquivo_guarda_configuracoes():
     assert (back["qpcr_groups"]["Fator 2"] == "15 dpf").all()
 
 
-@pytest.mark.parametrize("page", ["views/inicio.py", "views/quant_cdna.py", "views/qpcr.py", "views/estatistica.py",
+@pytest.mark.parametrize("page", ["views/inicio.py", "views/cronograma.py", "views/quant_cdna.py", "views/qpcr.py", "views/estatistica.py",
                                   "views/textos.py", "views/ajuda.py"])
 def test_todas_as_telas_abrem_sem_erro(page):
     from streamlit.testing.v1 import AppTest
