@@ -1,0 +1,5 @@
+-r requirements.txt
+pytest
+# usados só para conferir a estatística contra implementações de referência
+pingouin
+scikit-posthocs

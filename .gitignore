@@ -1,0 +1,19 @@
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.streamlit/secrets.toml
+.DS_Store
+
+# Arquivos do experimento salvos pelo app
+*.xlsx
+
+# Dados reais do laboratório (não publicados): ficam só no computador local.
+# Os testes que usam esses arquivos são pulados quando eles não existem.
+example-data/
+tests/data/
+
+# Configuração local (caminhos desta máquina)
+.claude/
+run.cmd
+fishlab-logo.png
